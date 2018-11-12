@@ -44,9 +44,9 @@ public class GameLogic : MonoBehaviour {
         if (Input.GetMouseButtonDown(1))
         {
             Transform hit = GetTransformHit();
+            if (hit == null || hit.tag != "Obstacle") return;
             if (connectNow == null)//CreateConnect
             {
-                if (hit == null) return;
                 connectNow = Instantiate(Resources.Load("Connect") as GameObject).GetComponent<ConnectObj>();
                 connectNow.CreateConnect(hit, this);
             }
