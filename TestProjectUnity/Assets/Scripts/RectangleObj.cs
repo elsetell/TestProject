@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RectangleObj : MonoBehaviour {
     GameLogic gLogic;
+    public List<ConnectObj> connectsRect = new List<ConnectObj>();
     private Transform _transform;
 
     private void Start()
@@ -18,11 +19,13 @@ public class RectangleObj : MonoBehaviour {
 
     private void OnMouseUp()//startDrag = connectmove
     {
-
+        foreach (ConnectObj co in connectsRect)
+            co.move = false;
     }
     private void OnMouseDown()//endDrag = !connectmove
     {
-
+        foreach (ConnectObj co in connectsRect)
+            co.move = true;
     }
 
     private void OnMouseDrag()//moveRect
@@ -32,6 +35,9 @@ public class RectangleObj : MonoBehaviour {
 
     public void DestroyRect() //DestroyRect and his connects
     {
+        int count = connectsRect.Count;
+        for (int i = count - 1; i >= 0; i--)
+            connectsRect[i].DestroyConnect();
         Destroy(gameObject);
     }
 }

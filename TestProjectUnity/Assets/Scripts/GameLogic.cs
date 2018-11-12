@@ -10,7 +10,10 @@ public class GameLogic : MonoBehaviour {
     private float IntervalTouch;
     static float clickInterval = 0.3f;
 
-    public RectangleObj rectNow;
+    //line
+    private ConnectObj connectNow;
+    //rect
+    private RectangleObj rectNow;
 
     private void Start()
     {
@@ -37,9 +40,21 @@ public class GameLogic : MonoBehaviour {
                 GetInfoAboutLastClick();
             }
         }
-        else
+        //work with connect(line)
+        if (Input.GetMouseButtonDown(1))
         {
-
+            Transform hit = GetTransformHit();
+            if (connectNow == null)//CreateConnect
+            {
+                if (hit == null) return;
+                connectNow = Instantiate(Resources.Load("Connect") as GameObject).GetComponent<ConnectObj>();
+                connectNow.CreateConnect(hit, this);
+            }
+            else//DoneCreateConnect
+            {
+                connectNow.CloseConnect(hit);
+                connectNow = null;
+            }
         }
     }
 
