@@ -43,10 +43,10 @@ public class RectangleObj : MonoBehaviour {
 
     private void OnMouseDrag()//moveRect
     {
-        if(!CheckCollisionAll(points))
+        if(!CheckCollisionAllCorners(points))
             _transform.position = gLogic.GetPositionMouse();
     }
-    public bool CheckCollisionAll(Vector2[] positions) // raycastAll(choose) vs check interval position
+    public bool CheckCollisionAllCorners(Vector2[] positions) // raycastAll(choose) vs check interval position
     {
         for (int i = 0; i < positions.Length; i++)
         {

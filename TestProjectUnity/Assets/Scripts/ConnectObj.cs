@@ -40,7 +40,7 @@ public class ConnectObj : MonoBehaviour {
     }
     public void CloseConnect(Transform target)
     {
-        if (target == start)
+        if (target == null || target.tag != "Obstacle" ||  target == start)
         {
             DestroyConnect();
             return;

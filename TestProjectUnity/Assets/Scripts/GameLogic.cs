@@ -22,7 +22,8 @@ public class GameLogic : MonoBehaviour {
     }
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        //work with rect
+        if (Input.GetMouseButtonDown(0))
         {
             Transform hit = GetTransformHit(GetPositionMouse());
             if (DoubleClick())//DestroyRectangle
@@ -46,13 +47,13 @@ public class GameLogic : MonoBehaviour {
         if (Input.GetMouseButtonDown(1))
         {
             Transform hit = GetTransformHit(GetPositionMouse());
-            if (hit == null || hit.tag != "Obstacle") return;
             if (connectNow == null)//CreateConnect
             {
+                if (hit == null || hit.tag != "Obstacle") return;
                 connectNow = Instantiate(Resources.Load("Connect") as GameObject).GetComponent<ConnectObj>();
                 connectNow.CreateConnect(hit, this);
             }
-            else//DoneCreateConnect
+            else//Finish CreateConnect
             {
                 connectNow.CloseConnect(hit);
                 connectNow = null;
