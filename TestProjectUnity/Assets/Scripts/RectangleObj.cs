@@ -5,25 +5,33 @@ using UnityEngine;
 public class RectangleObj : MonoBehaviour {
     GameLogic gLogic;
     public List<ConnectObj> connectsRect = new List<ConnectObj>();
-    
-    //transform
     private Transform _transform;
-    public Vector2 sizeRect;
-    public Vector2[] points;
+    private Vector2 sizeRect;
+    private Vector2[] points;
 
     private void Start()
     {
         _transform = GetComponent<Transform>();
         InitSize();
+        LoadIntervalBounds();
     }
     private void InitSize()
     {
         sizeRect = new Vector2(GetComponent<BoxCollider2D>().bounds.size.x/2, GetComponent<BoxCollider2D>().bounds.size.y/2);
+    }
+    void LoadIntervalBounds()
+    {
+        points = new Vector2[8];
         points[0] = new Vector2(-sizeRect.x, sizeRect.y);
         points[1] = new Vector2(-sizeRect.x, -sizeRect.y);
         points[2] = new Vector2(sizeRect.x, -sizeRect.y);
         points[3] = new Vector2(sizeRect.x, sizeRect.y);
+        points[4] = new Vector2(-sizeRect.x / 2, sizeRect.y / 2);
+        points[5] = new Vector2(-sizeRect.x / 2, -sizeRect.y / 2);
+        points[6] = new Vector2(sizeRect.x / 2, -sizeRect.y / 2);
+        points[7] = new Vector2(sizeRect.x / 2, sizeRect.y / 2);
     }
+
     public void CreateRect(GameLogic gl)
     {
         GetComponent<SpriteRenderer>().material.color = new Color(Random.value, Random.value, Random.value, 1.0f);
@@ -51,7 +59,7 @@ public class RectangleObj : MonoBehaviour {
         for (int i = 0; i < positions.Length; i++)
         {
             Transform hit = gLogic.GetTransformHit(gLogic.GetPositionMouse() + positions[i]);
-            if (gLogic.CheckCollision(hit) && (hit != _transform && hit != _transform.GetChild(0)))
+            if (gLogic.CheckCollision(hit) && hit != _transform)
             {
                 return true;
             }

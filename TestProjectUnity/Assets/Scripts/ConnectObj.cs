@@ -5,9 +5,9 @@ using UnityEngine;
 public class ConnectObj : MonoBehaviour {
     private GameLogic gLogic;
     private LineRenderer lr;
-    public Transform start;
-    public Transform end;
-    public Vector2 endVector;
+    [HideInInspector] public Transform start;
+    [HideInInspector] public Transform end;
+    [HideInInspector] public Vector2 endVector;
     public bool move;
 
     private void Start()
@@ -40,7 +40,7 @@ public class ConnectObj : MonoBehaviour {
     }
     public void CloseConnect(Transform target)
     {
-        if (target == null || target.tag != "Obstacle" ||  target == start)
+        if (target == null ||  target == start)
         {
             DestroyConnect();
             return;

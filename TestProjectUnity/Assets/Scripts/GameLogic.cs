@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class GameLogic : MonoBehaviour {
     private Transform parentRect;
-    public List<Transform> rectangles;
+    private List<Transform> rectangles = new List<Transform>();
 
     //double click var
     private Vector2 lastClickPos;
     private float IntervalTouch;
     static float clickInterval = 0.3f;
 
-    //line
-    private ConnectObj connectNow;
-    //rect
-    private RectangleObj rectNow;
+    private ConnectObj connectNow;//not closed connect
+    private RectangleObj rectNow;//choose rect
 
     private void Start()
     {
@@ -28,7 +26,7 @@ public class GameLogic : MonoBehaviour {
             Transform hit = GetTransformHit(GetPositionMouse());
             if (DoubleClick())//DestroyRectangle
             {
-                if (hit != null && hit.tag == "Obstacle")
+                if (hit != null)
                     hit.GetComponent<RectangleObj>().DestroyRect();
             }
             else if (!CheckCollision(hit))//CreateRectangle
@@ -49,7 +47,7 @@ public class GameLogic : MonoBehaviour {
             Transform hit = GetTransformHit(GetPositionMouse());
             if (connectNow == null)//CreateConnect
             {
-                if (hit == null || hit.tag != "Obstacle") return;
+                if (hit == null) return;
                 connectNow = Instantiate(Resources.Load("Connect") as GameObject).GetComponent<ConnectObj>();
                 connectNow.CreateConnect(hit, this);
             }
@@ -85,6 +83,6 @@ public class GameLogic : MonoBehaviour {
 
     public bool CheckCollision(Transform hit) // check foк obstacles(rectangle)
     {
-        return (hit != null && (hit.tag == "Obstacle" || hit.tag == "AreaObstacle")) ? true : false;
+        return (hit != null && (hit.tag == "Obstacle")) ? true : false;
     }
 }

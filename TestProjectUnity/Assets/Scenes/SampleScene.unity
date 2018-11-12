@@ -245,7 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b6c703c8764a94ca0da23986ce064f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rectangles: []
 --- !u!4 &1191983048
 Transform:
   m_ObjectHideFlags: 0
