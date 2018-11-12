@@ -134,6 +134,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectsRect: []
+  sizeRect: {x: 0, y: 0}
+  points:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
 --- !u!212 &212535038856579696
 SpriteRenderer:
   m_ObjectHideFlags: 1

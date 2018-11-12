@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameLogic : MonoBehaviour {
     private Transform parentRect;
+    public List<Transform> rectangles;
 
     //double click var
     private Vector2 lastClickPos;
@@ -23,7 +24,7 @@ public class GameLogic : MonoBehaviour {
     {
         if(Input.GetMouseButtonDown(0))
         {
-            Transform hit = GetTransformHit();
+            Transform hit = GetTransformHit(GetPositionMouse());
             if (DoubleClick())//DestroyRectangle
             {
                 if (hit != null && hit.tag == "Obstacle")
@@ -34,6 +35,7 @@ public class GameLogic : MonoBehaviour {
                 RectangleObj cloneRect = Instantiate(Resources.Load("Rect") as GameObject, GetPositionMouse(), Quaternion.identity, parentRect)
                     .GetComponent<RectangleObj>();
                 cloneRect.CreateRect(this);
+                rectangles.Add(cloneRect.transform);
             }
             else
             {
@@ -43,7 +45,7 @@ public class GameLogic : MonoBehaviour {
         //work with connect(line)
         if (Input.GetMouseButtonDown(1))
         {
-            Transform hit = GetTransformHit();
+            Transform hit = GetTransformHit(GetPositionMouse());
             if (hit == null || hit.tag != "Obstacle") return;
             if (connectNow == null)//CreateConnect
             {
@@ -70,10 +72,9 @@ public class GameLogic : MonoBehaviour {
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    Transform GetTransformHit()
+    public Transform GetTransformHit(Vector2 posTo)
     {
-        RaycastHit2D hit = Physics2D.Raycast(GetPositionMouse(), Vector2.zero);
-        return hit.transform;
+        return Physics2D.Raycast(posTo, Vector2.zero).transform;
     }
 
     bool DoubleClick()
@@ -81,7 +82,7 @@ public class GameLogic : MonoBehaviour {
         return (Time.time < IntervalTouch + clickInterval && lastClickPos == GetPositionMouse());
     }
 
-    bool CheckCollision(Transform hit) // check foк obstacles(rectangle)
+    public bool CheckCollision(Transform hit) // check foк obstacles(rectangle)
     {
         return (hit != null && (hit.tag == "Obstacle" || hit.tag == "AreaObstacle")) ? true : false;
     }
